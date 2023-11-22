@@ -1,18 +1,26 @@
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
-const exphbs = require('express-handlebars');
+const exhbs = require('express-handlebars');
 const routes = require('./controllers');
 
+const app = express();
 
 const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-const app = express();
+
 const PORT = process.env.PORT || 3001;
 
-// Set up Handlebars.js engine with custom 
-const hbs = exphbs.create({});
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Inform Express.js on which template engine to use
+const hbs = exhbs.create({})
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+
 
 const sess = {
   secret: 'Super secret secret',
@@ -31,6 +39,14 @@ const sess = {
 
 app.use(session(sess));
 
+
+app.use(routes);
+
+const okToSync = process.env.NODE_ENV === "production" ? false : true;
+
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log('Now listening'));
+});
 
 
 

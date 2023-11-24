@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
         },
         {
           model: Comment,
-          attributes: ['content'], include: { model: User, attributes: ['name', 'createdAt'] }
+          attributes: ['content', 'date_created'], include: { model: User, attributes: ['name'] }
         }
       ],
     });
@@ -37,7 +37,7 @@ router.get('/', async (req, res) => {
 router.get('/post/:id', async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id, {
-      attributes: ['id', 'title', 'content', 'createdAt', 'updatedAt'],
+      attributes: ['id', 'title', 'content', 'date_created'],
       include: [
         {
           model: User,
@@ -49,7 +49,7 @@ router.get('/post/:id', async (req, res) => {
           include: [
             {
               model: User,
-              attributes: ['name', 'createdAt'],
+              attributes: ['name', 'date_created'],
             }
           ]
         }
@@ -101,7 +101,7 @@ router.get('/loginsignup', (req, res) => {
 });
 
 //createpost handlebars
-router.get('createpost/post/:id', withAuth, async (req, res) => {
+router.get('/createpost/post/:id', withAuth, async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id, {
       attributes: ['id', 'title'],
@@ -113,7 +113,7 @@ router.get('createpost/post/:id', withAuth, async (req, res) => {
 
     const post = postData.get({ plain: true });
 
-    res.render('post-page', { ...post, comments: post.comments, logged_in: req.session.logged_in });
+    res.render('post', { ...post, comments: post.comments, logged_in: req.session.logged_in });
   }
   catch (err) {
     res.status(500).json(err);

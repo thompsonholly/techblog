@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
 //   }
 // })
 
-// Updates book based on its id
+// Updates post based on its id
 router.put('/:id', (req, res) => {
   // Calls the update method on the Post model
   Post.update(
@@ -42,9 +42,9 @@ router.put('/:id', (req, res) => {
       },
     }
   )
-    .then((updatePOst) => {
+    .then((updatePost) => {
       // Sends the updated Post as a json response
-      res.json(updatePOst);
+      res.json(updatePost);
     })
     .catch((err) => res.json(err));
 });

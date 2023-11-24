@@ -54,6 +54,12 @@ const deletePost = async (event) => {
   }
 }
 
-document.querySelector('.post-cancel').addEventListener('click', cancelPostForm);
-document.querySelector('.post-update').addEventListener('click', updatePostForm);
-document.querySelector('.post-delete').addEventListener('click', deletePost);
+document
+  .querySelector('.post-cancel')
+  .addEventListener('click', cancelPostForm);
+document
+  .querySelector('.post-update')
+  .addEventListener('click', updatePostForm);
+document
+  .querySelector('.post-delete')
+  .addEventListener('click', deletePost);

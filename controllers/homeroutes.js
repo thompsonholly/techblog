@@ -13,6 +13,10 @@ router.get('/', async (req, res) => {
           model: User,
           attributes: ['name'],
         },
+        {
+          model: Comment,
+          attributes: ['content'], include: { model: User, attributes: ['name', 'createdAt'] }
+        }
       ],
     });
 
@@ -33,6 +37,7 @@ router.get('/', async (req, res) => {
 router.get('/post/:id', async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id, {
+      attributes: ['id', 'title', 'content', 'createdAt', 'updatedAt'],
       include: [
         {
           model: User,
@@ -40,10 +45,11 @@ router.get('/post/:id', async (req, res) => {
         },
         {
           model: Comment,
+          attributes: ['name', 'title'],
           include: [
             {
               model: User,
-              attributes: ['name'],
+              attributes: ['name', 'createdAt'],
             }
           ]
         }
@@ -53,7 +59,7 @@ router.get('/post/:id', async (req, res) => {
     const post = postData.get({ plain: true });
 
     res.render('post', {
-      ...post,
+      ...post, comments: post.comments,
       logged_in: req.session.logged_in
     });
   } catch (err) {
@@ -63,7 +69,7 @@ router.get('/post/:id', async (req, res) => {
 
 // Use withAuth middleware to prevent access to route
 //talks about '' url address
-router.get('/profile', withAuth, async (req, res) => {
+router.get('/dashboard', withAuth, async (req, res) => {
   try {
     // Find the logged in user based on the session ID
     const userData = await User.findByPk(req.session.user_id, {
@@ -87,11 +93,31 @@ router.get('/profile', withAuth, async (req, res) => {
 router.get('/loginsignup', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
-    res.redirect('/profile');// see line 65
+    res.redirect('/dashboard');// see line 65
     return;
   }
 
   res.render('loginsignup');
+});
+
+//createpost handlebars
+router.get('createpost/post/:id', withAuth, async (req, res) => {
+  try {
+    const postData = await Post.findByPk(req.params.id, {
+      attributes: ['id', 'title'],
+    });
+    if (!postData) {
+      res.status(404).json('No post found!');
+      return
+    }
+
+    const post = postData.get({ plain: true });
+
+    res.render('post-page', { ...post, comments: post.comments, logged_in: req.session.logged_in });
+  }
+  catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;

@@ -20,7 +20,7 @@
 <body>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Tech Blog</a>
+      <a class="navbar-brand" href="/">Tech Blog</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -28,18 +28,26 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
             {{#if loggedIn}}
-            <a class="navBtn logout-btn" href="#">Logout</a>
-            <a class"navBtn" href="/dashboard">My Posts</a>
+            <a class="navBtn logout-btn " id="logout">Logout</a>
+            <a class="navBtn" href="/dashboard">My Posts</a>
             {{else}}
           <li class="nav-item"></li>
           <a class="nav-link" href="/loginsignup">Login</a>
           <li class="nav-item">
             <a class="nav-link" href="/loginsignup">Sign Up</a>
           </li>
+          {{/if}}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  {{{body}}}
+  {{#if loggedIn}}
+  <script src="./js/logout.js"></script>
+  {{/if}}
 
-          {{{body}}}
 </body>
 
 </html>

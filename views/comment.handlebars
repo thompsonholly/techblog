@@ -1,0 +1,38 @@
+<section>
+  <div class="container mt-5">
+    <div class="row align-items-stretch justify-content-between">
+
+      <div class="col-12 mb-3 flex-grow-1">
+        <div class="card h-100 border-dark">
+          <h5 class="card-header">New Comment</h5>
+          <div class="card-body">
+            <form class="edit-comment-form">
+
+
+              <div class="mb-3">
+                <label for="post-id" class="form-label">Post-Id</label>
+                <input type="text" class="form-control" id="post-id" value="{{id}}">
+              </div>
+
+              <div class="mb-3">
+                <label for="post-title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="post-title" value="{{title}}">
+              </div>
+
+              <div class="mb-3">
+                <label for="comment-content" class="form-label">Comment</label>
+                <input type="text" class="form-control" id="comment-content">
+              </div>
+
+              <button type="submit" class="col-12 btn btn-outline-secondary mb-2 mt-2">Submit<button>
+                  <button type="submit" class="col-12 btn btn-outline-secondary mb-2 mt-2">Cancel</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="../public/js/comment.js"></script>

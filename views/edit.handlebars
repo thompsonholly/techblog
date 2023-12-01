@@ -25,15 +25,7 @@
                 <textarea class="form-control" id="post-content" rows="7">{{content}}</textarea>
               </div>
               {{!-- Category --}}
-              <div class="mb-4">
-                <label for="post-category" class="form-label">Category</label>
-                <select class="form-select" id="post-category" aria-label="Default select example">
-                  <option value="{{category.id}}" selected>{{category.title}}</option>
-                  {{#each categories}}
-                  <option value="{{id}}">{{title}}</option>
-                  {{/each}}
-                </select>
-              </div>
+
               <button type="submit" class="col-12 mb-2 btn btn-outline-primary post-cancel">Cancel</button>
               <button type="submit" class="col-12 mb-2 btn btn-outline-warning post-update">Update Post</button>
               <button type="submit" class="col-12 mb-2 btn btn-outline-danger post-delete">Delete Post</button>
@@ -51,4 +43,4 @@
 
 
 
-<script src="../public/js/edit.js"></script>
+<script src="./js/edit.js"></script>

@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
         },
         {
           model: Comment,
-          attributes: ['content', 'date_created'], include: { model: User, attributes: ['name'] }
+          attributes: ['comment', 'date_created'], include: { model: User, attributes: ['name'] }
         }
       ],
     });
@@ -37,7 +37,7 @@ router.get('/', async (req, res) => {
 router.get('/post/:id', async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id, {
-      attributes: ['id', 'title', 'content', 'date_created'],
+      attributes: ['id', 'title', 'contents', 'created_at'],
       include: [
         {
           model: User,
@@ -45,11 +45,11 @@ router.get('/post/:id', async (req, res) => {
         },
         {
           model: Comment,
-          attributes: ['name', 'title'],
+          attributes: ['comment', 'date_created'],
           include: [
             {
               model: User,
-              attributes: ['name', 'date_created'],
+              attributes: ['name'],
             }
           ]
         }
@@ -59,7 +59,7 @@ router.get('/post/:id', async (req, res) => {
     const post = postData.get({ plain: true });
 
     res.render('post', {
-      ...post, comments: post.comments,
+      ...post,
       logged_in: req.session.logged_in
     });
   } catch (err) {
@@ -78,7 +78,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
     });
 
     const user = userData.get({ plain: true });
-
+    console.log(user)
     // '' reference handlebars page
     res.render('dashboard', {
       ...user,
@@ -101,19 +101,11 @@ router.get('/loginsignup', (req, res) => {
 });
 
 //createpost handlebars
-router.get('/createpost/post/:id', withAuth, async (req, res) => {
+router.get('/create-post', withAuth, async (req, res) => {
   try {
-    const postData = await Post.findByPk(req.params.id, {
-      attributes: ['id', 'title'],
-    });
-    if (!postData) {
-      res.status(404).json('No post found!');
-      return
-    }
 
-    const post = postData.get({ plain: true });
 
-    res.render('post', { ...post, comments: post.comments, logged_in: req.session.logged_in });
+    res.render('createpost', { logged_in: req.session.logged_in });
   }
   catch (err) {
     res.status(500).json(err);

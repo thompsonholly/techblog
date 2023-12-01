@@ -11,11 +11,11 @@
 
       <div class="card border-dark">
         <div class="card-header">
-          <h5>Posted by {{user.name}} on {{format_date date_created}}</h5>
+          <h5>Posted by {{user.name}} on {{created_at}}</h5>
           <p class="card-text fst-italic">{{post.title}}</p>
         </div>
         <div class="card-body">
-          <p class="card-text">{{content}}</p>
+          <p class="card-text">{{contents}}</p>
         </div>
       </div>
     </div>
@@ -24,16 +24,51 @@
   <div class="container">
     <div class="col-12 mb-4">
       <h4 class="mb-3">Comments</h4>
-      <a class="d-flex align-items-center justify-content-center btn btn-outline-primary mb-3"
+      {{!-- <a class="d-flex align-items-center justify-content-center btn btn-outline-primary mb-3"
         href="/new-comment/post/{{id}}">
         <h6 class="my-auto text-center">New Comment</h6>
-      </a>
+      </a> --}}
+      <section>
+        <div class="container mt-5">
+          <div class="row align-items-stretch justify-content-between">
+
+            <div class="col-12 mb-3 flex-grow-1">
+              <div class="card h-100 border-dark">
+                <h5 class="card-header">New Comment</h5>
+                <div class="card-body">
+                  <form class="edit-comment-form">
+
+
+                    <div class="mb-3">
+                      {{!-- <label for="post-id" class="form-label">Post-Id</label> --}}
+                      <input type="text" class="form-control" id="post-id" value="{{id}}" hidden>
+                    </div>
+
+
+                    <div class="mb-3">
+                      <label for="comment-content" class="form-label">Comment</label>
+                      <input type="text" class="form-control" id="comment-content">
+                    </div>
+
+                    <button type="submit" class="col-12 btn btn-outline-secondary mb-2 mt-2">Submit<button>
+                        {{!-- <button type="submit" class="col-12 btn btn-outline-secondary mb-2 mt-2">Cancel</button>
+                        --}}
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <script src="./js/comment.js"></script>
       {{#if comments.length}}
       {{#each comments}}
       <div class="card border-dark mb-2">
         <div class="card-body">
-          <p class="card-text">{{content}}</p>
-          <p class="card-text fst-italic">Posted by {{user.name}} on {{format_date user.date_created}}</p>
+          <p class="card-text">{{comment}}</p>
+          <p class="card-text fst-italic">Posted by {{user.name}} on {{ date_created}}</p>
         </div>
       </div>
       {{/each}}

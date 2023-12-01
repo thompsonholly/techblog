@@ -9,16 +9,17 @@ const updatePostForm = async (event) => {
   //get post info
   const postInfo = {
     title: document.querySelector('#post-title').value.trim(),
-    content: document.querySelector('#post-content').value.trim(),
+    contents: document.querySelector('#post-content').value.trim(),
   }
 
-  if (!postInfo.title || !postInfo.content) {
+  if (!postInfo.title || !postInfo.contents) {
     alert('Please enter input in all fields.');
     return;
   }
 
   //new post
-  const info = await fetch(`/api/post/`, {
+  const info = await fetch(`/api/posts/`, {
+
     method: 'POST',
     body: JSON.stringify(postInfo),
     headers: { 'Content-Type': 'application/json' },
@@ -27,9 +28,10 @@ const updatePostForm = async (event) => {
   if (info.ok) {
     document.location.replace('/dashboard');
   } else {
+    console.log(info)
     alert('Please try again!')
   }
 }
 
 document.querySelector('.post-cancel').addEventListener('click', cancelPostForm);
-document.querySelector('post-create').addEventListener('click', updatePostForm);
+document.querySelector('.post-create').addEventListener('click', updatePostForm);
